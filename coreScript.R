@@ -4,10 +4,30 @@
 # by Bri Barnes, University of Massachusetts Amherst, School of Public Policy
 ####
 
-crawler(Website = "https://www.careerbuilder.com/jobs-psycometrician?keywords=Psycometrician&location=", no_cores, no_conn, MaxDepth, DIR, RequestsDelay = 0,
-        Obeyrobots = FALSE, Useragent, Encod, Timeout = 5,
-        URLlenlimit = 255, urlExtfilter, urlregexfilter, ignoreUrlParams,
-        KeywordsFilter, KeywordsAccuracy, FUNPageFilter, ExtractXpathPat,
-        ExtractCSSPat, PatternsNames, ExcludeXpathPat, ExcludeCSSPat,
-        ExtractAsText = TRUE, ManyPerPattern = FALSE, NetworkData = FALSE,
-        NetwExtLinks = FALSE, statslinks = FALSE)
+#####
+# Load Evironment
+
+library(Rcrawler)
+
+
+#####
+# Crawling Scripts
+Rcrawler("https://www.indeed.com/jobs?q=Psychometrician", no_cores = 2, no_conn = 2, MaxDepth = 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
