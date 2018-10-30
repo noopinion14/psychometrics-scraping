@@ -1,7 +1,10 @@
 #####
 # R version 3.5.1
-# Phsycometrics Job Availability Project
-# by Bri Barnes, University of Massachusetts Amherst, School of Public Policy
+# Phsycometrics Job Availability Project | Fall 2018
+# Core Crawling Script
+#
+# Code by:
+# Bri Barnes, University of Massachusetts Amherst, School of Public Policy | brianbarnes@umass.edu
 ####
 
 #####
@@ -17,28 +20,30 @@ cvURL <- "https://chroniclevitae.com/job_search?utf8=%E2%9C%93&job_search%5Bkeyw
 ## Career Builder Start Page
 cbURL <- "https://www.careerbuilder.com/"
 
-## Indeed Start Page
-inURL <- "https://www.indeed.com/jobs?q=Psychometrician"
+## Indeed Variables
+indURL <- "https://www.indeed.com/jobs?q=Psychometrician"
+indFilter <- "/jobs/"
+indExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 
 # Keyword Variables
 ## Initial KW Grouping
-kw1 <- c("assessment", "testing")
+keyword1 <- c("assessment", "testing")
 
 #####
 # Crawling Script
 
 ## Indeed Crawling Script
 Rcrawler(
-  Website = inURL, 
+  Website = indURL, 
   no_cores = 4, 
   no_conn = 4, 
-  KeywordsFilter = c("assessment", "testing"), 
+  KeywordsFilter = kw1, 
   KeywordsAccuracy = 50, 
-  urlregexfilter = "/jobs/",
-  ignoreUrlParams = c("rbl", "jt", "rbc", "explvl"),
+  urlregexfilter = indFilter,
+  ignoreUrlParams = indExcludeURL,
   DIR = "./test"
   )
-inIndex <- INDEX
+indIndex <- INDEX
 rm(INDEX)
 
 
