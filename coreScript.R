@@ -32,6 +32,7 @@ indExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 # Keyword Variables
 ## Initial KW Grouping
 keyword1 <- c("assessment", "testing")
+keyword2 <- c("psychometric", "testing")
 
 #####
 # Crawling Script
