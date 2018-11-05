@@ -1,0 +1,3 @@
+GCE_AUTH_FILE="PsyMet Job Research-a4738b4be16e.json"
+GCE_DEFAULT_PROJECT_ID="psymet-job-research"
+GCE_DEFAULT_ZONE="us-east1-b"
