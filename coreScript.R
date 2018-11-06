@@ -26,13 +26,13 @@ cbExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 
 ## Indeed Variables
 indURL <- "https://www.indeed.com/jobs?q=Psychometrician"
-indFilter <- "/jobs/"
+indFilter <- "/rc/"
 indExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 
 # Keyword Variables
 ## Initial KW Grouping
-keyword1 <- c("assessment", "testing")
-keyword2 <- c("psychometric", "testing")
+keyword1 <- c("assessment", "test")
+keyword2 <- c("psychometric", "test")
 
 #####
 # Crawling Script
