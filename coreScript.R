@@ -20,9 +20,9 @@ cvFilter <- "/jobs/"
 cvExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 
 ## Career Builder Start Page
-cbURL <- "https://www.careerbuilder.com/"
+cbURL <- "https://www.careerbuilder.com/jobs-psycometrician?keywords=psycometrician&location="
 cbFilter <- "/jobs/"
-cbExcludeURL <- c("rbl", "jt", "rbc", "explvl")
+cbExcludeURL <- c("emp", "pay", "company", "cat1", "cat2", "cat3")
 
 ## Indeed Variables
 indURL <- "https://www.indeed.com/jobs?q=Psychometrician"
