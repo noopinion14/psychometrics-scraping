@@ -15,9 +15,9 @@ library(Rcrawler)
 #####
 # Search Variables
 ## Chronicle Vitae Start Page
-cvURL <- "https://chroniclevitae.com/job_search?utf8=%E2%9C%93&job_search%5Bkeywords%5D=&job_search%5Bposition_type%5D=&job_search%5Binstitution_type%5D=&job_search%5Bemployment_type%5D=&job_search%5Blocation%5D=&job_search%5Bzip_code%5D=&job_search%5Bdistance_from_zip%5D=10&job_search%5Bstart_date%5D=&job_search%5Bkeywords%5D=psychometrician"
+cvURL <- "https://chroniclevitae.com/job_search?job_search%5Bkeywords%5D=Psychometric&job_search%5Bstart_date%5D=180&utf8=%E2%9C%93"
 cvFilter <- "/jobs/"
-cvExcludeURL <- c("rbl", "jt", "rbc", "explvl")
+cvExcludeURL <- c("position_type", "institution_type", "employment_type", "location", "zip_code", "distance_from_zip")
 
 ## Career Builder Start Page
 cbURL <- "https://www.careerbuilder.com/jobs-psycometrician?keywords=psycometrician&location="
@@ -55,7 +55,7 @@ rm(INDEX)
 ## Career Builder Crawling Script
 Rcrawler(
   Website = cbURL, 
-  no_cores = 4, 
+  no_cores = 4,
   no_conn = 4, 
   KeywordsFilter = keyword1, 
   KeywordsAccuracy = 50, 
