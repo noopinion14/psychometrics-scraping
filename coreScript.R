@@ -89,18 +89,8 @@ rm(INDEX)
 cbScrapingURLList <- 
   
 cbData <- ContentScraper(Url = cvScrapingURLList, 
-<<<<<<< HEAD
                          CssPatterns = c("", "", ""),
                          PatternsName = c("positionTitle", "positionLocation", "positionDescription")
-=======
-<<<<<<< HEAD
-                         CssPatterns = c("", "", ""),
-                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
-=======
-                          CssPatterns = c("", "", ""),
-                          PatternsName = c("positionTitle", "positionLocation", "positionDescription")
->>>>>>> f76cff6477cf95470d82b92046cfa697caa89988
->>>>>>> 3089b647b3bd55f163c12c2caf14fe8bb51b8abb
                          )
 
 ## Chronicle Vitae Scraping Script
