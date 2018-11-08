@@ -86,15 +86,28 @@ rm(INDEX)
 # Scraping Scripts
 
 ## Careerbuilder Scraping Script
+cbScrapingURLList <- 
+  
+cbData <- ContentScraper(Url = cvScrapingURLList, 
+                          CssPatterns = c(".page-title h1", ".job-listing__location", ".job-listing__content__description"),
+                          PatternsName = c("positionTitle", "positionLocation", "positionDescription")
+                         )
 
 ## Chronicle Vitae Scraping Script
 cvScrapingURLList <- 
 
-cvData <- ContentScraper(Url = cvScrapingURLList, CssPatterns = "")
+cvData <- ContentScraper(Url = cvScrapingURLList, 
+                         CssPatterns = c(".page-title h1", ".job-listing__location", ".job-listing__content__description"),
+                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
+                         )
 
 ## Indeed Scraping Script
-
-
+indScrapingURLList <- 
+  
+indData <- ContentScraper(Url = cvScrapingURLList, 
+                         CssPatterns = c(".page-title h1", ".job-listing__location", ".job-listing__content__description"),
+                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
+                         )
 
 #####
 # Testing Code Section
