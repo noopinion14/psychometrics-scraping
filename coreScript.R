@@ -10,32 +10,38 @@
 #####
 # Load Evironment
 
-library(Rcrawler)
+library(Rcrawler,jsonlite)
 
-#####
+from#####
 # Search Variables
-## Chronicle Vitae Start Page
-cvURL <- "https://chroniclevitae.com/job_search?job_search%5Bkeywords%5D=Psychometric&job_search%5Bstart_date%5D=180&utf8=%E2%9C%93"
+
+## Indeed Variables
+indURL <- "https://www.indeed.com/q-Psychometrician-jobs.html"
+indFilter <- c("/job/", "/jobs/", "/viewjob", "vjk", "/rc/")
+indExcludeURL <- c("rbl", "jt", "rbc", "explvl", "mailto", "javascript")
+
+## Career Builder Variables
+cbURL <- "https://www.careerbuilder.com/jobs-psychometric"
+cbFilter <- "/job/"
+cbExcludeURL <- c("emp", "pay", "company", "cat1", "cat2", "cat3")
+
+## Chronicle Vitae Variables
+cvURL <- "chroniclevitae.com/job_search?job_search%5Bkeywords%5D=psychomentric"
 cvFilter <- "/jobs/"
 cvExcludeURL <- c("position_type", "institution_type", "employment_type", "location", "zip_code", "distance_from_zip")
 
-## Career Builder Start Page
-cbURL <- "https://www.careerbuilder.com/jobs-psycometrician?keywords=psycometrician&location="
-cbFilter <- "/jobs/"
-cbExcludeURL <- c("emp", "pay", "company", "cat1", "cat2", "cat3")
+## Monster Variables
+monURL <- "https://www.monster.com/jobs/search/?q=psychometrician&stpage=1&page=10"
+monFilter <- "job-openings."
 
-## Indeed Variables
-indURL <- "https://www.indeed.com/jobs?q=Psychometrician"
-indFilter <- "/rc/"
-indExcludeURL <- c("rbl", "jt", "rbc", "explvl")
 
 # Keyword Variables
 ## Initial KW Grouping
 keyword1 <- c("assessment", "test")
-keyword2 <- c("psychometric", "test")
+keyword2 <- c("psychometric", "assessment", "test")
 
 #####
-# Crawling Script
+# Crawling Scripts
 
 ## Indeed Crawling Script
 Rcrawler(
@@ -43,8 +49,9 @@ Rcrawler(
   no_cores = 4, 
   no_conn = 4, 
   KeywordsFilter = keyword1, 
-  KeywordsAccuracy = 50, 
-  urlregexfilter = indFilter,
+  KeywordsAccuracy = 40, 
+  MaxDepth = 3,
+  dataUrlfilter = indFilter,
   ignoreUrlParams = indExcludeURL,
   DIR = "./test"
   )
@@ -57,9 +64,11 @@ Rcrawler(
   Website = cbURL, 
   no_cores = 4,
   no_conn = 4, 
-  KeywordsFilter = keyword1, 
-  KeywordsAccuracy = 50, 
-  urlregexfilter = cbFilter,
+  Encod = "UTF-8",
+  KeywordsFilter = keyword2, 
+  KeywordsAccuracy = 60,
+  MaxDepth = 3,
+  dataUrlfilter = cbFilter,
   ignoreUrlParams = cbExcludeURL,
   DIR = "./test"
 )
@@ -71,43 +80,75 @@ Rcrawler(
   Website = cvURL, 
   no_cores = 4, 
   no_conn = 4, 
-  KeywordsFilter = keyword1, 
-  KeywordsAccuracy = 50, 
-  urlregexfilter = cvFilter,
+  KeywordsFilter = keyword2, 
+  KeywordsAccuracy = 40, 
+  MaxDepth = 3,
+  dataUrlfilter = cvFilter,
   ignoreUrlParams = cvExcludeURL,
   DIR = "./test"
 )
 cvIndex <- INDEX
 rm(INDEX)
 
+## Monster Crawling Script
+Rcrawler(
+  Website = monURL, 
+  no_cores = 4, 
+  no_conn = 4, 
+  KeywordsFilter = keyword2, 
+  KeywordsAccuracy = 50, 
+  MaxDepth = 3,
+  dataUrlfilter = monFilter,
+  DIR = "./test"
+)
+monIndex <- INDEX
+rm(INDEX)
 
 
 #####
 # Scraping Scripts
 
-## Careerbuilder Scraping Script
-cbScrapingURLList <- 
+## Indeed Scraping Script
+indScrapingURLList <- indIndex$Url
   
-cbData <- ContentScraper(Url = cvScrapingURLList, 
-                         CssPatterns = c("", "", ""),
-                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
+indData <- ContentScraper(Url = indScrapingURLList, 
+                         CssPatterns = c("title", ".jobsearch-JobInfoHeader-subtitle", ".jobsearch-JobComponent-description"),
+                         PatternsName = c("positionTitle", "positionLocation", "positionDescription"),
+                         asDataFrame = TRUE
                          )
+indData$url <- indScrapingURLList
+                         
+## Careerbuilder Scraping Script
+cbScrapingURLList <- cbIndex$Url
+  
+cbData <- ContentScraper(Url = cbScrapingURLList, 
+                         CssPatterns = c("title", "#job-company-name", ".address", ".description"),
+                         PatternsName = c("positionTitle", "companyName", "positionLocation", "positionDescription"),
+                         asDataFrame = TRUE
+                         )
+cbData$url <- cbScrapingURLList
 
 ## Chronicle Vitae Scraping Script
 cvScrapingURLList <- 
 
 cvData <- ContentScraper(Url = cvScrapingURLList, 
                          CssPatterns = c(".page-title h1", ".job-listing__location", ".job-listing__content__description"),
-                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
+                         PatternsName = c("positionTitle", "positionLocation", "positionDescription"),
+                         asDataFrame = TRUE
                          )
 
-## Indeed Scraping Script
-indScrapingURLList <- 
+## Monster Scraping Script
+monScrapingURLList <- monIndex$Url
+
+monScriptType <- "application/ld+json"
   
-indData <- ContentScraper(Url = cvScrapingURLList, 
-                         CssPatterns = c("", "", ""),
-                         PatternsName = c("positionTitle", "positionLocation", "positionDescription")
-                         )
+monData <- ContentScraper(Url = monScrapingURLList, 
+                          CssPatterns = c(".heading > .title", ".heading > .subtitle", "#JobDescription"),
+                          PatternsName = c("positionTitle", "positionLocation", "positionDescription"),
+                          asDataFrame = TRUE
+                          )
+monData$url <- monScrapingURLList
+
 
 #####
 # Testing Code Section
