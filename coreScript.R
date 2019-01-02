@@ -10,9 +10,9 @@
 #####
 # Load Evironment
 
-library(Rcrawler,jsonlite)
+library(Rcrawler,jsonlite,xlsx)
 
-from#####
+#####
 # Search Variables
 
 ## Indeed Variables
@@ -151,5 +151,32 @@ monData$url <- monScrapingURLList
 
 
 #####
-# Testing Code Section
-LinkExtractor(indURL)
+# Data Clean Up
+
+## Indeed Cleanup
+indDataClean <- indData
+indDataClean$positionTitle <- unlist(indData$positionTitle)
+indDataClean$positionLocation <- unlist(indData$positionLocation)
+indDataClean$positionDescription <- unlist(indData$positionDescription)
+
+## Career Builder Cleanup
+cbDataClean <- cbData
+cbDataClean$positionTitle <- unlist(cbData$positionTitle)
+cbDataClean$companyName <- unlist(cbData$companyName)
+cbDataClean$positionLocation <- unlist(cbData$positionLocation)
+cbDataClean$positionDescription <- unlist(cbData$positionDescription)
+
+## Monster Cleanup
+monDataClean <- monData
+monDataClean$positionTitle <- unlist(monData$positionTitle)
+monDataClean$positionLocation <- unlist(monData$positionLocation)
+monDataClean$positionDescription <- unlist(monData$positionDescription)
+
+#####
+# Exporting Data
+
+## Export Clean Data to XLSX
+write.xlsx(indDataClean, "indDataClean.xlsx")
+write.xlsx(cbDataClean, "cbDataClean.xlsx")
+write.xlsx(monDataClean, "monDataClean.xlsx")
+
